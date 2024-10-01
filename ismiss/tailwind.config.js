@@ -9,6 +9,7 @@ export default {
       colors: {
         'usc-green': '#124d00',
         'ann-header': '#578ebe',
+        'btn-hover': '#848C14',
       },
       fontFamily: {
         'sans': ['Times New Roman', 'Times', 'sans-serif']
