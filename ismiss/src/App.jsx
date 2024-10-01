@@ -4,13 +4,16 @@ import viteLogo from "/vite.svg";
 
 import Dashboard from "./components/Dasboard";
 import Registration from "./components/Registration";
+import ManageAccount from './components/ManageAccount.jsx'
+
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
       <div>
-        <Dashboard />
+        {/* <Dashboard /> */}
+        <ManageAccount />
       </div>
     </>
   );
