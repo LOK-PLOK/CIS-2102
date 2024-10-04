@@ -36,7 +36,7 @@ const ManageAccount = () => {
     // If submitted information exists, render the details
     return (
       <div className={backgroundStyle}>
-        <div className="bg-white shadow-announcement rounded-lg p-6 max-w-md w-full my-3">
+        <div className="bg-white shadow-announcement rounded-lg p-6 max-w-xl  my-3">
           <h3 className="text-lg font-semibold mb-4">Submitted Information:</h3>
           <p>
             <strong>Email Address:</strong> {submitted.email}

@@ -9,7 +9,6 @@ const Dashboard = () =>{
         <>
             <Header/>
             <Navbar/>
-            <ManageAccount/>
             <Contents/>
             <Footer/>
         </>
