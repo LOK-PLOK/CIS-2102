@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 const Navbar = () =>{
     return (
         <nav className="bg-usc-green px-[30px] py-[20px]">

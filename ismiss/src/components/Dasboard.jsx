@@ -7,10 +7,7 @@ import ManageAccount from './ManageAccount.jsx'
 const Dashboard = () =>{
     return(
         <>
-            <Header/>
-            <Navbar/>
             <Contents/>
-            <Footer/>
         </>
     )
 }
