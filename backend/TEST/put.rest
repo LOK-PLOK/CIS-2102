@@ -1,0 +1,7 @@
+PUT http://localhost:3000/notes/3
+Content-Type: application/json
+
+{
+    "title":"Note 3",
+    "description":"This is an updated note"
+}
