@@ -1,22 +1,25 @@
 const notes = require("../services/notesService");
 
-const createNotesController = (req, res) => {
+const createNotesController = async (req, res) => {
   const note = req.body;
+  const user = req.user;
   if (!note.title || !note.description) {
     return res.status(400).send("Title and description are required");
   }
-  const createdNote = notes.createNote(note);
+  const createdNote = await notes.createNote(note,user.id);
   res.status(201).json(createdNote);
 };
 
-const getNotesController = (req, res) => {
-  const notesList = notes.getNotes();
+const getNotesController = async (req, res) => {
+  const user = req.user;
+  const notesList = await notes.getNotes(user.id);
   res.json(notesList);
 };
 
-const getNoteController = (req, res) => {
+const getNoteController = async (req, res) => {
+  const user = req.user;
   const id = parseInt(req.params.id);
-  const note = notes.getNote(id);
+  const note = await notes.getNote(id, user.id);
   if (note) {
     res.json(note);
   } else {
@@ -24,10 +27,11 @@ const getNoteController = (req, res) => {
   }
 };
 
-const updateNoteController = (req, res) => {
+const updateNoteController = async (req, res) => {
+  const user = req.user;
   const id = parseInt(req.params.id);
   const { title, description } = req.body;
-  const note = notes.updateNote(id, title, description);
+  const note = await notes.updateNote(id, title, description, user.id);
   if (note) {
     res.json(note);
   } else {
@@ -35,9 +39,10 @@ const updateNoteController = (req, res) => {
   }
 };
 
-const deleteNoteController = (req, res) => {
+const deleteNoteController = async (req, res) => {
+  const user = req.user;
   const id = parseInt(req.params.id);
-  const notesList = notes.deleteNote(id);
+  const notesList = await notes.deleteNote(id, user.id);
   if (notesList) {
     res.json(notesList);
   } else {

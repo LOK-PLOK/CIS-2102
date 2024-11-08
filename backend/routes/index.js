@@ -1,5 +1,7 @@
-const notesRoutes = require('./notesRoutes');
+const notesRoutes = require("./notesRoutes");
+const usersRoutes = require("./usersRoutes");
 
 module.exports = {
-    notesRoutes,    
-}
+  notesRoutes,
+  usersRoutes,
+};

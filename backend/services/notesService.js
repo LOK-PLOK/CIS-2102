@@ -1,63 +1,77 @@
-let notes = [
-  // {
-  //   id: 1,
-  //   title: "Note 1",
-  //   description: "This is the first note",
-  // },
-  // {
-  //   id: 2,
-  //   title: "Note 2",
-  //   description: "This is the second note",
-  // },
-  // {
-  //   id: 3,
-  //   title: "Note 3",
-  //   description: "This is the third note",
-  // },
-  // {
-  //   id: 4,
-  //   title: "Note 4",
-  //   description: "This is the fourth note",
-  // },
-];
+const { PrismaClient } = require("@prisma/client");
 
-const createNote = (note) => {
-  note.id = notes.length ? notes[notes.length - 1].id + 1 : 1;
-  notes.push(note);
-  return note;
+const prisma = new PrismaClient();
+
+const createNote = async (note, userId) => {
+  const newNote = await prisma.note.create({
+    data: {
+      title: note.title,
+      description: note.description,
+      user: {
+        connect: {
+          id: userId,
+        },
+      },
+    },
+  });
+  return newNote;
 };
 
-const getNotes = () => {
+const getNotes = async (userId) => {
+  const notes = await prisma.note.findMany({
+    where: {
+      user: userId,
+    },
+  });
   return notes;
 };
 
-const getNote = (id) => {
-  const note = findNote(id);
+const getNote = async (id, userId) => {
+  const note = await findNote(id, userId);
   return note;
 };
 
-const updateNote = (id, title, description) => {
-  const note = findNote(id);
+const updateNote = async (id, title, description, userId) => {
+  const note = await findNote(id, userId);
   if (!note) return null;
 
-  note.title = title;
-  note.description = description;
-  return note;
+  const updatedNote = await prisma.note.update({
+    where: {
+      id: id,
+      user: userId,
+    },
+    data: {
+      title: title,
+      description: description,
+    },
+  });
+
+  return updatedNote;
 };
 
-const deleteNote = (id) => {
-  const note = findNote(id);
+const deleteNote = async (id, userId) => {
+  const note = await findNote(id, userId);
 
-  if (note) {
-    notes = notes.filter((note) => note.id !== id);
-    return notes;
-  } else {
-    return null;
-  }
+  if (!note) return null;
+
+  const deletedNote = await prisma.note.delete({
+    where: {
+      id: id,
+      user: userId,
+    },
+  });
+
+  return deletedNote;
 };
 
-const findNote = (id) => {
-  const note = notes.find((note) => note.id === id);
+const findNote = async (id, userId) => {
+  const note = await prisma.note.findUnique({
+    where: {
+      id: id,
+      user: userId,
+    },
+  });
+
   return note;
 };
 
