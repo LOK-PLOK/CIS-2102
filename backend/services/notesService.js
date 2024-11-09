@@ -7,11 +7,7 @@ const createNote = async (note, userId) => {
     data: {
       title: note.title,
       description: note.description,
-      user: {
-        connect: {
-          id: userId,
-        },
-      },
+      userId: userId,
     },
   });
   return newNote;
@@ -20,7 +16,7 @@ const createNote = async (note, userId) => {
 const getNotes = async (userId) => {
   const notes = await prisma.note.findMany({
     where: {
-      user: userId,
+      userId: userId,
     },
   });
   return notes;
@@ -38,11 +34,11 @@ const updateNote = async (id, title, description, userId) => {
   const updatedNote = await prisma.note.update({
     where: {
       id: id,
-      user: userId,
     },
     data: {
       title: title,
       description: description,
+      userId: userId,
     },
   });
 
@@ -57,7 +53,6 @@ const deleteNote = async (id, userId) => {
   const deletedNote = await prisma.note.delete({
     where: {
       id: id,
-      user: userId,
     },
   });
 
@@ -65,10 +60,10 @@ const deleteNote = async (id, userId) => {
 };
 
 const findNote = async (id, userId) => {
-  const note = await prisma.note.findUnique({
+  const note = await prisma.note.findFirst({
     where: {
       id: id,
-      user: userId,
+      userId: userId,
     },
   });
 
